@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HubKotlinApp">
+
+        <!-- Hub -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -18,10 +20,20 @@
             android:theme="@style/Theme.HubKotlinApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Basquete -->
+        <activity
+            android:name=".basquete.BasqueteActivity"
+            android:exported="false" />
+
+        <!-- Calculadora -->
+        <activity
+            android:name=".calculadora.CalculadoraActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
