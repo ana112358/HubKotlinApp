@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.hubkotlinapp.basquete.BasqueteActivity
 import com.example.hubkotlinapp.calculadora.CalculadoraActivity
-import com.example.hubkotlinapp.R
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {

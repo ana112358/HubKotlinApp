@@ -1,22 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#1a1a1a"
+    tools:context="com.example.hubkotlinapp.basquete.BasqueteActivity">
 
+<!-- Header com título -->
     <TextView
-        android:id="@+id/textBasquete"
-        android:text="Placar de Basquete 🏀"
-        android:textSize="24sp"
-        android:layout_width="wrap_content"
+        android:id="@+id/titulo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"/>
+        android:background="#0490d4"
 
+        android:text="PLACAR DE BASQUETE"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true" />
     <Button
         android:id="@+id/buttonVoltar"
-        android:text="Voltar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="VOLTAR"
+        android:layout_below="@id/titulo"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="#0490d4"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:padding="8dp"/>
+
+    <!-- Container principal dos times -->
+    <LinearLayout
+        android:id="@+id/containerTimes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titulo"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <!-- TIME A -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/background_rounded_times"
+            android:layout_margin="8dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/timeA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="TIME A"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#0490d4"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/placarTimeA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="0"
+                android:textSize="64sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/faltasTimeA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="Faltas: 0"
+                android:textSize="20sp"
+                android:textColor="#CCCCCC"
+                android:fontFamily="sans-serif"/>
+
+            <Button
+                android:id="@+id/tresPontosA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="+3 PONTOS"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#0490d4"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/doisPontosA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="+2 PONTOS"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#0490d4"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/tiroLivreA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="LANCE LIVRE"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/faltaTimeA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:text="⚠️ FALTA"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#F44336"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+
+        </LinearLayout>
+
+        <!-- Linha divisória -->
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:layout_marginVertical="8dp"/>
+
+        <!-- TIME B -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/background_rounded_times"
+            android:layout_margin="8dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/timeB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="TIME B"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FF6600"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/placarTimeB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="0"
+                android:textSize="64sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif"/>
+
+            <TextView
+                android:id="@+id/faltasTimeB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="Faltas: 0"
+                android:textSize="20sp"
+                android:textColor="#CCCCCC"
+                android:fontFamily="sans-serif"/>
+
+            <Button
+                android:id="@+id/tresPontosB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="+3 PONTOS"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#FF6600"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/doisPontosB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="+2 PONTOS"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#FF6600"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/tiroLivreB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="LANCE LIVRE"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#4CAF50"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+            <Button
+                android:id="@+id/faltaTimeB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:text="⚠️ FALTA"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#F44336"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Histórico de eventos -->
+    <!-- Histórico de eventos -->
+    <ScrollView
+        android:id="@+id/scrollHistorico"
+        android:layout_width="match_parent"
+        android:contentDescription="Histórico de eventos da partida"
+        android:layout_height="0dp"
+        android:layout_above="@id/reiniciarPartida"
+        android:layout_below="@id/containerTimes"
+        android:layout_margin="8dp"
+        android:background="#222222">
+
+        <LinearLayout
+            android:id="@+id/containerHistorico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" />
+    </ScrollView>
+
+
+    <!-- Botão de reiniciar -->
+    <Button
+        android:id="@+id/reiniciarPartida"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="REINICIAR PARTIDA"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="#333333"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:textSize="16sp"/>
+
+
+</RelativeLayout>
+
