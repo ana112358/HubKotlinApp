@@ -18,5 +18,12 @@
         android:id="@+id/buttonCalculadora"
         android:text="Calculadora Científica"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonConversor"
+        android:text="Conversor"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>
