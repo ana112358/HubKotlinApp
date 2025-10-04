@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutTecladoNumerico"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:padding="4dp">
+
+    <!--
+        Para cada botão, usamos:
+        - style="@style/Widget.Material3.Button.OutlinedButton": Botão com contorno.
+        - layout_columnWeight="1": Faz com que cada botão ocupe a mesma largura na coluna.
+        - layout_gravity="fill": Garante que o botão preencha toda a célula da grade.
+        - android:insetTop/Bottom="0dp": Remove as margens verticais padrão para um visual mais limpo.
+        - android:textSize="20sp": Aumenta o tamanho do texto para melhor legibilidade.
+    -->
+
+    <!-- Linha 1 -->
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="7"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="8"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="9"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnClear"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="AC"
+        android:textSize="20sp"
+        android:textColor="?attr/colorError" />
+
+    <!-- Linha 2 -->
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="4"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="5"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="6"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBackspace"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="⌫"
+        android:textSize="20sp" />
+
+    <!-- Linha 3 -->
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="1"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="2"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="3"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSwap"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="↑↓"
+        android:textSize="20sp" />
+
+    <!-- Linha 4 -->
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:layout_columnWeight="2"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="0"
+        android:textSize="20sp" />
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:onClick="onDigitClick"
+        android:text="."
+        android:textSize="20sp" />
+    <!-- Botão de calcular movido para o teclado, no lugar de um dos botões de função -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEquals"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:backgroundTint="?attr/colorPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="="
+        android:textSize="20sp"
+        android:textColor="@color/white" />
+</GridLayout>

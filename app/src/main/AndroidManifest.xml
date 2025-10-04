@@ -33,7 +33,11 @@
         <activity
             android:name=".calculadora.CalculadoraActivity"
             android:exported="false" />
-        <activity android:name="com.example.hubkotlinapp.Conversor.ConversorActivity" />
+
+        <!-- Conversor -->
+        <activity
+            android:name=".Conversor.ConversorActivity"
+            android:exported="false" />
 
     </application>
 
