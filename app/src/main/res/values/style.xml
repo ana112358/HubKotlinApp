@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      O arquivo styles.xml é usado para definir estilos reutilizáveis para a sua aplicação Android.
+      Um "estilo" é um conjunto de atributos de UI (cores, tamanhos de texto, fontes, margens, etc.)
+      que podem ser aplicados a várias Views (TextView, Button, etc.) ou até a toda Activity.
+  -->
+
+    <!--
+     Exemplo de estilo para um botão:
+     <style name="BotaoPrimario">
+         <item name="android:background">#0490d4</item>
+         <item name="android:textColor">#FFFFFF</item>
+         <item name="android:padding">12dp</item>
+         <item name="android:textSize">16sp</item>
+     </style>
+     -> Esse estilo pode ser aplicado a qualquer botão usando:
+     android:style="@style/BotaoPrimario"
+ -->
+</resources>
