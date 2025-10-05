@@ -8,22 +8,20 @@
     android:background="?attr/colorSurfaceContainer"
     tools:context=".Conversor.ConversorActivity">
 
-    <!-- Guideline para dividir a tela em 60/40 -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.60" />
+        app:layout_constraintGuide_percent="@dimen/landscape_guideline_percent" />
 
-    <!-- Barra Superior (ocupa a largura toda) -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -33,56 +31,56 @@
             app:title="Conversor Multifuncional" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Seletor Principal de Conversão (fica no painel esquerdo) -->
     <Spinner
         android:id="@+id/spinnerTipoConversao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:layout_marginEnd="@dimen/spacing_normal"
         app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
 
-    <!-- ScrollView para o conteúdo principal, caso não caiba na altura -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/spinnerTipoConversao"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline_vertical">
+        app:layout_constraintTop_toBottomOf="@id/spinnerTipoConversao">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Layout para Conversões Padrão (ocupa a altura disponível) -->
             <LinearLayout
                 android:id="@+id/layoutConversorPadrao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="@dimen/spacing_normal"
                 android:visibility="visible"
                 app:layout_constraintTop_toTopOf="parent">
-                <!-- Conteúdo do conversor padrão (sem alterações) -->
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="2dp"
+                    app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="@dimen/card_padding">
+
                         <Spinner
                             android:id="@+id/spinnerUnidadeDe"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
+
                         <TextView
                             android:id="@+id/txtValorDe"
                             android:layout_width="match_parent"
@@ -90,33 +88,36 @@
                             android:gravity="end"
                             android:text="0"
                             android:textColor="?attr/colorPrimary"
-                            android:textSize="32sp"
+                            android:textSize="@dimen/converter_result_text_size"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <ImageView
                     android:id="@+id/iconSwap"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/swap_icon_size"
+                    android:layout_height="@dimen/swap_icon_size"
                     android:layout_gravity="center_horizontal"
-                    android:padding="4dp"
+                    android:padding="@dimen/swap_icon_padding"
                     android:src="@drawable/ic_swap_vert" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="2dp"
+                    app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="@dimen/card_padding">
+
                         <Spinner
                             android:id="@+id/spinnerUnidadePara"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
+
                         <TextView
                             android:id="@+id/txtValorPara"
                             android:layout_width="match_parent"
@@ -124,35 +125,32 @@
                             android:gravity="end"
                             android:text="0"
                             android:textColor="?attr/colorOnSurface"
-                            android:textSize="32sp" />
+                            android:textSize="@dimen/converter_result_text_size" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Layout para Gorjeta Otimizado para Paisagem -->
             <LinearLayout
                 android:id="@+id/layoutConversorGorjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="@dimen/spacing_normal"
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Primeira linha com Subtotal e Porcentagem -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutSubtotal"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_small"
                         android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
                         android:hint="Subtotal">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -164,7 +162,6 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layoutPorcentagem"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -178,16 +175,13 @@
                             android:focusable="false"
                             android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
-
                 </LinearLayout>
 
-                <!-- Segunda linha com Pessoas e Resultado -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/layoutNumeroPessoas"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/spacing_small"
                     android:hint="Dividir entre (pessoas)">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -196,30 +190,27 @@
                         android:layout_height="wrap_content"
                         android:focusable="false"
                         android:inputType="none" />
-
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/txtResultadoGorjeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/spacing_normal"
                     android:background="?attr/colorSurface"
                     android:gravity="center"
-                    android:padding="16dp"
-                    android:lineSpacingExtra="4dp"
-                    android:textSize="18sp"
+                    android:lineSpacingExtra="@dimen/spacing_tiny"
+                    android:padding="@dimen/spacing_normal"
+                    android:textSize="@dimen/tip_result_text_size"
                     android:textStyle="bold"
                     tools:text="Gorjeta: R$ 15,00\nTotal: R$ 115,00\nPor Pessoa: R$ 57,50" />
-
             </LinearLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 
-    <!-- Teclado Numérico Incluído (fica no painel direito) -->
+    <!-- Teclado Numérico Incluído -->
     <include
+        android:id="@+id/tecladoIncluido"
         layout="@layout/teclado_numerico"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -227,5 +218,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,4 +18,29 @@
     <dimen name="footer_theme_switch_size">81dp</dimen>
     <dimen name="footer_margin_top">12dp</dimen>
     <dimen name="footer_margin_bottom">8dp</dimen>
+
+    <!-- DIMENSÕES DO CONVERSOR ### -->
+    <!-- Gerais -->
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="card_padding">12dp</dimen>
+
+    <!-- Conversor: Tamanhos de Texto -->
+    <dimen name="converter_result_text_size">34sp</dimen>
+    <dimen name="tip_result_text_size">18sp</dimen>
+
+    <!-- Conversor: Ícone Swap -->
+    <dimen name="swap_icon_size">40dp</dimen>
+    <dimen name="swap_icon_padding">4dp</dimen>
+
+    <!-- Conversor: Teclado -->
+    <dimen name="keyboard_button_text_size">20sp</dimen>
+    <dimen name="keyboard_height_portrait">0.35</dimen> <!-- 42% -->
+
+    <!-- Paisagem: Divisor -->
+    <dimen name="landscape_guideline_percent">0.60</dimen> <!-- 60% -->
+    <!-- ### FIM - DIMENSÕES DO CONVERSOR ### -->
+
 </resources>
