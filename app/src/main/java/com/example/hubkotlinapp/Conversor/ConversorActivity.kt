@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.example.hubkotlinapp.R
 import com.google.android.material.appbar.MaterialToolbar
@@ -70,7 +71,7 @@ class ConversorActivity : AppCompatActivity() {
     private lateinit var spinnerTipoConversao: Spinner
     private lateinit var layoutConversorPadrao: LinearLayout
     private lateinit var layoutConversorGorjeta: LinearLayout
-    private lateinit var layoutTecladoNumerico: GridLayout
+    private lateinit var layoutTecladoNumerico: ConstraintLayout
     private lateinit var txtValorDe: TextView
     private lateinit var txtValorPara: TextView
     private lateinit var spinnerUnidadeDe: Spinner
@@ -118,6 +119,24 @@ class ConversorActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             finish() // Finaliza a atividade atual, retornando ao Hub.
         }
+
+        val digitClickListener = View.OnClickListener { view ->
+            // Chama a mesma função onDigitClick que já existe
+            if (view is Button) {
+                onDigitClick(view)
+            }
+        }
+        findViewById<Button>(R.id.btn0).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn1).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn2).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn3).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn4).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn5).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn6).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn7).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn8).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btn9).setOnClickListener(digitClickListener)
+        findViewById<Button>(R.id.btnDot).setOnClickListener(digitClickListener)
 
         // Teclado
         findViewById<Button>(R.id.btnClear).setOnClickListener { onClearClick() }
