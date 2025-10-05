@@ -3,7 +3,7 @@
     <corners android:radius="16dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/white" />
+        android:color="@color/primaryText_basquete" />
     <padding
         android:left="12dp"
         android:top="2dp"

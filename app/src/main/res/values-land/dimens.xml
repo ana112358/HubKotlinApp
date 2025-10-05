@@ -18,4 +18,5 @@
     <dimen name="footer_theme_switch_size">72dp</dimen>
     <dimen name="footer_margin_top">0dp</dimen>
     <dimen name="footer_margin_bottom">8dp</dimen>
+
 </resources>

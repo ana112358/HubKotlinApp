@@ -19,7 +19,7 @@
     <dimen name="footer_margin_top">12dp</dimen>
     <dimen name="footer_margin_bottom">8dp</dimen>
 
-    <!-- DIMENSÕES DO CONVERSOR ### -->
+    <!-- ### DIMENSÕES DO CONVERSOR ### -->
     <!-- Gerais -->
     <dimen name="spacing_normal">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
@@ -42,5 +42,58 @@
     <!-- Paisagem: Divisor -->
     <dimen name="landscape_guideline_percent">0.60</dimen> <!-- 60% -->
     <!-- ### FIM - DIMENSÕES DO CONVERSOR ### -->
+
+    <!--### DIMENSÕES DO PLACAR BASQUETE ### -->
+    <!-- Título -->
+    <dimen name="basquete_titulo_text_size">18sp</dimen>
+    <dimen name="basquete_titulo_padding">10dp</dimen>
+
+    <!-- Botão voltar -->
+    <dimen name="basquete_voltar_margin_top">4dp</dimen>
+    <dimen name="basquete_voltar_padding">4dp</dimen>
+
+    <!-- Container Times -->
+    <dimen name="basquete_container_margin_top">52dp</dimen>
+
+    <!-- Container Time -->
+    <dimen name="basquete_container_margin">8dp</dimen>
+    <dimen name="basquete_container_padding">4dp</dimen>
+
+    <!-- Titulo time -->
+    <dimen name="basquete_titulo_time_padding">0dp</dimen>
+    <dimen name="basquete_titulo_time_text_size">20sp</dimen>
+
+    <!-- Placar -->
+    <dimen name="basquete_placar_padding">0dp</dimen>
+    <dimen name="basquete_placar_text_size">36sp</dimen>
+
+    <!-- Faltas -->
+    <dimen name="basquete_faltas_padding">0dp</dimen>
+    <dimen name="basquete_faltas_text_size">20sp</dimen>
+
+    <!-- Botão pontos -->
+    <dimen name="basquete_pontos_margin_top">4dp</dimen>
+    <dimen name="basquete_pontos_margin_bottom">8dp</dimen>
+    <dimen name="basquete_pontos_text_size">16sp</dimen>
+
+    <!-- Botão falta -->
+    <dimen name="basquete_botao_falta_margin_top">4dp</dimen>
+    <dimen name="basquete_botao_falta_margin_bottom">8dp</dimen>
+    <dimen name="basquete_botao_falta_text_size">16sp</dimen>
+
+    <!-- Linha divisória -->
+    <dimen name="basquete_linha_width">2dp</dimen>
+    <dimen name="basquete_linha_margin_vertical">8dp</dimen>
+
+    <!-- Scroll -->
+    <dimen name="basquete_scroll_margin">8dp</dimen>
+    <dimen name="basquete_scroll_padding">4dp</dimen>
+
+    <!-- Reiniciar -->
+    <dimen name="basquete_reiniciar_margin">8dp</dimen>
+    <dimen name="basquete_reiniciar_padding">8dp</dimen>
+    <dimen name="basquete_reiniciar_text_size">16sp</dimen>
+
+    <!--### FIM DIMENSÕES DO PLACAR BASQUETE ### -->
 
 </resources>
