@@ -101,7 +101,7 @@ class ConversorActivity : AppCompatActivity() {
         spinnerTipoConversao = findViewById(R.id.spinnerTipoConversao)
         layoutConversorPadrao = findViewById(R.id.layoutConversorPadrao)
         layoutConversorGorjeta = findViewById(R.id.layoutConversorGorjeta)
-        layoutTecladoNumerico = findViewById(R.id.layoutTecladoNumerico)
+        layoutTecladoNumerico = findViewById(R.id.tecladoIncluido)
         txtValorDe = findViewById(R.id.txtValorDe)
         txtValorPara = findViewById(R.id.txtValorPara)
         spinnerUnidadeDe = findViewById(R.id.spinnerUnidadeDe)
@@ -404,9 +404,9 @@ class ConversorActivity : AppCompatActivity() {
 
         val currencyFormat = NumberFormat.getCurrencyInstance()
         txtResultadoGorjeta.text = """
-            Gorjeta: R${currencyFormat.format(tipAmount)}
-            Total: R${currencyFormat.format(totalAmount)}
-            Por Pessoa: R${currencyFormat.format(amountPerPerson)}
+            Gorjeta: ${currencyFormat.format(tipAmount)}
+            Total: ${currencyFormat.format(totalAmount)}
+            Por Pessoa: ${currencyFormat.format(amountPerPerson)}
         """.trimIndent()
     }
 }
