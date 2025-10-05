@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <!-- Container dos 3 cards -->
     <LinearLayout
         android:id="@+id/cardsContainer"
@@ -115,17 +114,4 @@
             android:src="@drawable/hub_modo" />
     </LinearLayout>
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Botão de troca de tema (à direita) -->
-    <!--<ImageView
-    android:id="@+id/themeSwitch"
-    android:layout_width="@dimen/footer_icon_size"
-    android:layout_height="@dimen/footer_icon_size"
-    android:layout_marginTop="16dp"
-    android:layout_marginBottom="12dp"
-    android:clickable="true"
-    android:contentDescription="@string/theme_switch"
-    android:focusable="true"
-    android:src="@drawable/hub_modo" />-->
