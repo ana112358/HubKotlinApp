@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">HubKotlinApp</string>
+    <string name="app_name">Meu Hub</string>
+    <string name="header_image">Cabeçalho com título</string>
+    <string name="basquete_desc">App Basquete</string>
+    <string name="calculadora_desc">App Calculadora</string>
+    <string name="conversor_desc">App conversor</string>
+    <string name="zumbi_desc">Mão de zumbi saindo da terra</string>
+    <string name="theme_switch">Botão de alternar modo claro/escuro</string>
 </resources>
