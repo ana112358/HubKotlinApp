@@ -68,8 +68,7 @@
                 android:padding="16dp"
                 android:visibility="visible"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <!-- Card de Entrada -->
+                <!-- Conteúdo do conversor padrão (sem alterações) -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,7 +95,6 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Ícone de troca -->
                 <ImageView
                     android:id="@+id/iconSwap"
                     android:layout_width="40dp"
@@ -105,7 +103,6 @@
                     android:padding="4dp"
                     android:src="@drawable/ic_swap_vert" />
 
-                <!-- Card de Saída -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,7 +129,7 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- Layout para Gorjeta -->
+            <!-- Layout para Gorjeta Otimizado para Paisagem -->
             <LinearLayout
                 android:id="@+id/layoutConversorGorjeta"
                 android:layout_width="match_parent"
@@ -142,74 +139,84 @@
                 android:visibility="gone"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Conteúdo do layout de gorjeta aqui (idêntico ao original) -->
-                <com.google.android.material.card.MaterialCardView
+                <!-- Primeira linha com Subtotal e Porcentagem -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardElevation="2dp"
-                    app:cardUseCompatPadding="true">
-                    <LinearLayout
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutSubtotal"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Subtotal">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editSubtotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layoutPorcentagem"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="% Gorjeta">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editPorcentagemGorjeta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- Segunda linha com Pessoas e Resultado -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutNumeroPessoas"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Dividir entre (pessoas)">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editNumeroPessoas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Subtotal da Conta">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editSubtotal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="false"
-                                android:inputType="none" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:hint="% da Gorjeta">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editPorcentagemGorjeta"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="false"
-                                android:inputType="none" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:hint="Dividir entre (pessoas)">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/editNumeroPessoas"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="false"
-                                android:inputType="none" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                        <TextView
-                            android:id="@+id/txtResultadoGorjeta"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:background="?attr/colorSurface"
-                            android:gravity="center"
-                            android:padding="8dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:text="Total por pessoa: R$ 57,50"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                        android:focusable="false"
+                        android:inputType="none" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtResultadoGorjeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="?attr/colorSurface"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:lineSpacingExtra="4dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Gorjeta: R$ 15,00\nTotal: R$ 115,00\nPor Pessoa: R$ 57,50" />
+
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
 
     <!-- Teclado Numérico Incluído (fica no painel direito) -->
     <include
