@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tela de 4"-->
+    <dimen name="header_height">360dp</dimen>
+
+    <dimen name="cards_container_height">210dp</dimen>
+    <dimen name="cards_margin_top">36dp</dimen>
+    <dimen name="cards_margin_bottom">0dp</dimen>
+    <dimen name="cards_padding_start">250dp</dimen>
+    <dimen name="cards_padding_end">250dp</dimen>
+
+    <dimen name="cards_height">210dp</dimen>
+    <dimen name="card_margin_end">0dp</dimen>
+
+    <dimen name="footer_height">200dp</dimen>
+    <dimen name="footer_padding_horizontal">0dp</dimen>
+    <dimen name="footer_zumbi_icon_size">200dp</dimen>
+    <dimen name="footer_theme_switch_size">120dp</dimen>
+    <dimen name="footer_margin_top">0dp</dimen>
+    <dimen name="footer_margin_bottom">8dp</dimen>
+</resources>
