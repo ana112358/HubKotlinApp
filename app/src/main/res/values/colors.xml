@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- cores hub -->
+    <!-- cores HUB -->
     <color name="background_hub">#FFFFFF</color>
 
-    <!-- cores basquete -->
+    <!-- cores BASQUETE -->
     <color name="background_basquete">#1a1a1a</color>
     <color name="secondary_basquete">#0490d4</color>
     <color name="tertiary_basquete">#2a2a2a</color>
@@ -15,7 +15,7 @@
     <color name="textTimeB_basquete">#FF6600</color>
     <color name="backgroundScroll_basquete">#222222</color>
 
-    <!-- cores conversor -->
+    <!-- cores CONVERSOR -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -24,5 +24,27 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="dark_gray">#2a2a2a</color>
+
+    <!-- cores CALCULADORA -->
+    <!-- Backgrounds-->
+    <color name="background">#FFFFFF</color> <!-- white-->
+    <color name="second_background">#AAC3AE</color> <!-- gray green -->
+    <color name="third_background">#D9D9D9</color> <!-- light gray -->
+
+    <!-- Buttons colours-->
+    <color name="operation_buttons">#C55252</color> <!-- brown red -->
+    <color name="numbers_change_buttons">#7C7B7B</color> <!-- medium gray-->
+    <color name="equals_clear_buttons">#F07509</color> <!-- orange-->
+    <color name="toggle_button">#00000000</color> <!-- transparent-->
+    <color name="historic_portrait_button">#00000000</color> <!-- transparent-->
+    <color name="toggle_selected_button">#F07509</color> <!-- orange-->
+    <color name="functions_button">#3C3C3C</color> <!-- dark gray2-->
+
+    <!-- text colours-->
+    <color name="typed_text">#FFFFFF</color> <!-- white-->
+    <color name="operations_text">#D9D9D9</color> <!-- light gray -->
+    <color name="numbers_functions_text">#FFFFFF</color> <!-- white-->
+    <color name="result_text">#F07509</color> <!-- orange-->
+    <color name="fundoSplash">#D9D9D9</color>
 
 </resources>

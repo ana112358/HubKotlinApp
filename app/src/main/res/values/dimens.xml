@@ -96,4 +96,10 @@
 
     <!--### FIM DIMENSÕES DO PLACAR BASQUETE ### -->
 
+    <!-- ### DIMENSÕES DO CALCULADORA ### -->
+    <dimen name="calculator_button_text_size_landscape">20sp</dimen>
+    <dimen name="button_corner_radius_landscape">24dp</dimen>
+
+    <!--### FIM DIMENSÕES DO PLACAR CALCULADORA ### -->
+
 </resources>

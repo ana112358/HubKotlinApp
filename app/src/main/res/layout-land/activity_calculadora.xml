@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:padding="8dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        app:title="Calculadora"
+        app:titleTextColor="?attr/colorOnSurface"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Área superior (Display e controles) - Agora no TOPO -->
+    <LinearLayout
+        android:id="@+id/superiorArea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.3"
+        android:background="@drawable/background_superior_corners"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp">
+
+        <!-- Área do botão dos modos diurno/escuro -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iconDay"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:adjustViewBounds="true"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/sun" />
+
+            <ImageButton
+                android:id="@+id/btnToggleTheme"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@color/toggle_button"
+                android:contentDescription="@string/toggle_theme"
+                android:src="@drawable/daymode" />
+
+            <ImageView
+                android:id="@+id/iconNight"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:adjustViewBounds="true"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/moon" />
+        </LinearLayout>
+
+        <!-- Área do display (números digitados) -->
+        <TextView
+            android:id="@+id/txtResultado"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="0"
+            android:textColor="@color/typed_text"
+            android:textSize="52sp"
+            app:autoSizeMaxTextSize="52sp"
+            app:autoSizeMinTextSize="48sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform" />
+
+        <!-- LinearLayout do Histórico removido daqui -->
+
+    </LinearLayout>
+
+    <!-- Área inferior (botões) - Abaixo da superiorArea -->
+    <GridLayout
+        android:id="@+id/gridButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_inferior_corners"
+        app:layout_constraintTop_toBottomOf="@id/superiorArea"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:columnCount="6"
+        android:rowCount="5"
+        android:padding="12dp"
+        android:alignmentMode="alignMargins">
+
+        <!-- Linha 1 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnChange"
+            style="@style/RoundedButton.Landscape"
+            android:text=""
+            app:backgroundTint="@color/operation_buttons"
+            app:icon="@drawable/change"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="32dp"
+            app:iconTint="@null"
+            android:contentDescription="@string/btn_change_desc"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRad"
+            style="@style/RoundedButton.Landscape"
+            android:text="RAD"
+            android:textColor="@color/operations_text"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnClear"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="C"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBackspace"
+            style="@style/RoundedButton.Landscape"
+            android:text=""
+            android:contentDescription="@string/backspace"
+            app:icon="@drawable/backspace"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="24dp"
+            app:iconTint="@null"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPorcentagem"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="%"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDividir"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="÷"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <!-- Linha 2 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSin"
+            style="@style/RoundedButton.Landscape"
+            android:text="sin"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPow"
+            style="@style/RoundedButton.Landscape"
+            android:text="x²"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn7"
+            style="@style/RoundedButton.Landscape"
+            android:text="7"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn8"
+            style="@style/RoundedButton.Landscape"
+            android:text="8"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn9"
+            style="@style/RoundedButton.Landscape"
+            android:text="9"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMultiplicar"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="×"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <!-- Linha 3 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCos"
+            style="@style/RoundedButton.Landscape"
+            android:text="cos"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPowerXY"
+            style="@style/RoundedButton.Landscape"
+            android:text="xʸ"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn4"
+            style="@style/RoundedButton.Landscape"
+            android:text="4"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn5"
+            style="@style/RoundedButton.Landscape"
+            android:text="5"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn6"
+            style="@style/RoundedButton.Landscape"
+            android:text="6"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubtrair"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="-"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <!-- Linha 4 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTan"
+            style="@style/RoundedButton.Landscape"
+            android:text="tan"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSqrt"
+            style="@style/RoundedButton.Landscape"
+            android:text="√"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn1"
+            style="@style/RoundedButton.Landscape"
+            android:text="1"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn2"
+            style="@style/RoundedButton.Landscape"
+            android:text="2"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn3"
+            style="@style/RoundedButton.Landscape"
+            android:text="3"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSomar"
+            style="@style/RoundedButton.Landscape"
+            android:textColor="@color/operations_text"
+            android:text="+"
+            app:backgroundTint="@color/operation_buttons" />
+
+        <!-- Linha 5 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLn"
+            style="@style/RoundedButton.Landscape"
+            android:text="ln"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLog"
+            style="@style/RoundedButton.Landscape"
+            android:text="log"
+            android:textColor="@color/numbers_functions_text"
+            app:backgroundTint="@color/functions_button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/iconHistoric_deitado"
+            style="@style/RoundedButton.Landscape"
+            android:text=""
+            android:contentDescription="@string/historic_button_description"
+            app:icon="@drawable/historic"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="28dp"
+            app:iconTint="@null"
+            app:backgroundTint="@color/equals_clear_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn0"
+            style="@style/RoundedButton.Landscape"
+            android:text="0"
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPonto"
+            style="@style/RoundedButton.Landscape"
+            android:text="."
+            app:backgroundTint="@color/numbers_change_buttons" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnIgual"
+            style="@style/RoundedButton.Landscape"
+            android:text="="
+            app:backgroundTint="@color/equals_clear_buttons" />
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
