@@ -39,11 +39,6 @@ class CalculadoraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculadora)
 
-        // Configura a Toolbar para ter o botão de voltar
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            finish() // Fecha a CalculadoraActivity e volta para o Hub.
-        }
 
         val btnToggle = findViewById<ImageButton>(R.id.btnToggleTheme)
         updateToggleIcon(btnToggle)
@@ -59,6 +54,20 @@ class CalculadoraActivity : AppCompatActivity() {
             }
         }
 
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+
+        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            // 2. Se for modo escuro, pinta a seta de branco
+            toolbar.navigationIcon?.setTint(getColor(R.color.white))
+        } else {
+            // 3. Se for modo claro, pinta a seta de preto
+            toolbar.navigationIcon?.setTint(getColor(R.color.black))
+        }
+
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
         // --- O restante do seu código onCreate permanece o mesmo ---
         tvDisplay = findViewById(R.id.txtResultado)
 

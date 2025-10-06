@@ -1,6 +1,7 @@
 // ConversorActivity.kt
 package com.example.hubkotlinapp.Conversor
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -14,6 +15,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.hubkotlinapp.R
 import com.google.android.material.appbar.MaterialToolbar
@@ -93,6 +95,15 @@ class ConversorActivity : AppCompatActivity() {
         bindViews()
         setupListeners()
         setupMainSpinner()
+
+        val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+
+            iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.white))
+        } else {
+
+            iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.black))
+        }
     }
 
     private fun bindViews() {
