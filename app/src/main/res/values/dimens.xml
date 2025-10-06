@@ -41,7 +41,6 @@
 
     <!-- Paisagem: Divisor -->
     <dimen name="landscape_guideline_percent">0.60</dimen> <!-- 60% -->
-    <!-- ### FIM - DIMENSÕES DO CONVERSOR ### -->
 
     <!--### DIMENSÕES DO PLACAR BASQUETE ### -->
     <!-- Título -->
