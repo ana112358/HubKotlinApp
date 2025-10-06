@@ -108,8 +108,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="0"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="@dimen/converter_result_text_size" />
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="@dimen/converter_result_text_size"
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
