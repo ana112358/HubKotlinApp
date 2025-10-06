@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText
 import java.text.NumberFormat
 import java.util.Locale
 
-// enum ConversionType
+
 enum class ConversionType(val displayName: String, val units: Array<String>) {
     LENGTH(
         "Comprimento",
@@ -61,14 +61,13 @@ enum class ConversionType(val displayName: String, val units: Array<String>) {
             "Terabyte (TB)"
         )
     ),
-    TIP("Gorjeta", arrayOf()) // Gorjeta não tem unidades
+    TIP("Gorjeta", arrayOf())
 }
 
 
 
 class ConversorActivity : AppCompatActivity() {
 
-    // Declarações de Views
     private lateinit var toolbar: MaterialToolbar
     private lateinit var spinnerTipoConversao: Spinner
     private lateinit var layoutConversorPadrao: LinearLayout
@@ -129,14 +128,13 @@ class ConversorActivity : AppCompatActivity() {
 
 
     private fun setupListeners() {
-        // --- Listener da Toolbar para a ação de VOLTAR ---
+        // Listener da Toolbar para a ação de VOLTAR
         toolbar.setNavigationOnClickListener {
             finish() // Finaliza a atividade atual, retornando ao Hub.
         }
 
 
         val digitClickListener = View.OnClickListener { view ->
-            // Chama a mesma função onDigitClick que já existe
             if (view is Button) {
                 onDigitClick(view)
             }
@@ -218,9 +216,8 @@ class ConversorActivity : AppCompatActivity() {
 
         val isTipCalculator = (selectedConversionType == ConversionType.TIP)
 
-        // MUDANÇA: O botão de igual só é visível no modo gorjeta
+
         findViewById<Button>(R.id.btnEquals).visibility = if (isTipCalculator) View.VISIBLE else View.INVISIBLE
-        // O botão de swap só é visível nos outros modos
         findViewById<Button>(R.id.btnSwap).visibility = if (isTipCalculator) View.INVISIBLE else View.VISIBLE
         iconSwap.visibility = if (isTipCalculator) View.GONE else View.VISIBLE
 
@@ -252,7 +249,7 @@ class ConversorActivity : AppCompatActivity() {
                 if (currentText.isEmpty() && digit == ".") {
                     currentText = "0."
                 } else if (digit == "." && currentText.contains(".")) {
-                    return // Impede múltiplos pontos
+                    return
                 } else {
                     currentText += digit
                 }
@@ -262,7 +259,7 @@ class ConversorActivity : AppCompatActivity() {
             if (currentInput == "0" && digit != ".") {
                 currentInput = digit
             } else if (digit == "." && currentInput.contains(".")) {
-                return // Impede múltiplos pontos
+                return
             } else if (currentInput.length < 15) {
                 currentInput += digit
             }
@@ -325,9 +322,8 @@ class ConversorActivity : AppCompatActivity() {
         val fromUnit = spinnerUnidadeDe.selectedItem.toString()
         val toUnit = spinnerUnidadePara.selectedItem.toString()
 
-        // 1. Converte o valor de entrada para uma unidade base (metros, m², bytes)
+
         val valueInBaseUnit = when (fromUnit) {
-            // --- COMPRIMENTO (base: Metro) ---
             "Metro (m)" -> inputValue
             "Milímetro (mm)" -> inputValue / 1000.0
             "Centímetro (cm)" -> inputValue / 100.0
@@ -346,7 +342,6 @@ class ConversorActivity : AppCompatActivity() {
             "Acre (ac)" -> inputValue * 4046.86
             "Hectare (ha)" -> inputValue * 10000.0
 
-            // --- DADOS (base: Byte) ---
             "Byte" -> inputValue
             "Bit" -> inputValue / 8.0
             "Kilobyte (KB)" -> inputValue * 1024.0
@@ -357,7 +352,7 @@ class ConversorActivity : AppCompatActivity() {
             else -> inputValue
         }
 
-        // 2. Converte da unidade base para a unidade de saída
+        // Converte da unidade base para a unidade de saída
         val outputValue = when (toUnit) {
             // --- COMPRIMENTO (base: Metro) ---
             "Metro (m)" -> valueInBaseUnit

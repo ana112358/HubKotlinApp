@@ -205,10 +205,6 @@ class CalculadoraActivity : AppCompatActivity() {
         historicoConteudo.addView(tvOperacao)
         historicoConteudo.addView(tvResultado)
     }
-    // ### FIM DA CORREÇÃO ###
-
-    // --- NENHUMA OUTRA MUDANÇA É NECESSÁRIA NO RESTANTE DA LÓGICA ---
-    // (O resto do seu código permanece igual)
     private fun updateToggleIcon(btn: ImageButton) {
         val isDayMode = (resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK) != Configuration.UI_MODE_NIGHT_YES
@@ -240,7 +236,7 @@ class CalculadoraActivity : AppCompatActivity() {
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     val item = HistoricoItem(operacaoStr, resultadoStr)
                     historicoLista.add(item)
-                    // adicionarHistoricoNaTelaParcial(item) // Pode ser confuso para o usuário, opcional
+
                 }
             }
             currentInput = ""
@@ -444,7 +440,7 @@ class CalculadoraActivity : AppCompatActivity() {
         val displayText = if (currentInput.isNotEmpty()) {
             currentInput
         } else if (pendingOp != null && operand != null) {
-            formatResult(operand!!) // Não mostra o operador pendente no display principal
+            formatResult(operand!!)
         } else if (operand != null) {
             formatResult(operand!!)
         } else {

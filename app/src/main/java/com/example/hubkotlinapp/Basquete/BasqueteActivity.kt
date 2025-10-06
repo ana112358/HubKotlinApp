@@ -25,9 +25,8 @@ class BasqueteActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basquete) // layout do Placar
+        setContentView(R.layout.activity_basquete)
 
-        // TextViews
         pTimeA = findViewById(R.id.placarTimeA)
         pTimeB = findViewById(R.id.placarTimeB)
         faltasA = findViewById(R.id.faltasTimeA)
