@@ -6,4 +6,10 @@
     <string name="conversor_desc">App conversor</string>
     <string name="zumbi_desc">Mão de zumbi saindo da terra</string>
     <string name="theme_switch">Botão de alternar modo claro/escuro</string>
+
+
+    <string name="toggle_theme">Alternar tema</string>
+    <string name="btn_change_desc">Alterar para funções</string>
+    <string name="backspace">Apagar</string>
+    <string name="historic_button_description">Histórico</string>
 </resources>

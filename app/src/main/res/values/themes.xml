@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Tema principal do Hub -->
     <style name="Theme.HubKotlinApp" parent="Theme.Material3.DayNight.NoActionBar" >
         <item name="background">@color/background_hub</item>
         <item name="android:windowBackground">@color/background_hub</item>
     </style>
-</resources>
 
+    <!-- Tema da Calculadora -->
+    <style name="Base.Theme.CalculadoraApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <style name="Theme.CalculadoraApp" parent="Base.Theme.CalculadoraApp" />
+
+
+    <!-- Estilos de botões -->
+    <style name="RoundedButton.Landscape">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:textSize">@dimen/calculator_button_text_size_landscape</item>
+        <item name="android:insetTop">4dp</item>
+        <item name="android:insetBottom">4dp</item>
+        <item name="android:insetLeft">4dp</item>
+        <item name="android:insetRight">4dp</item>
+        <item name="cornerRadius">@dimen/button_corner_radius_landscape</item>
+    </style>
+
+</resources>

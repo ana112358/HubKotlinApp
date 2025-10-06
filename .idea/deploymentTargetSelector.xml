@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-10-05T17:23:03.936395Z">
+        <DropdownSelection timestamp="2025-10-05T17:46:33.790711700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\walte\.android\avd\Medium_Phone.avd" />
