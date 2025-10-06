@@ -95,14 +95,17 @@ class ConversorActivity : AppCompatActivity() {
         bindViews()
         setupListeners()
         setupMainSpinner()
-
         val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
 
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
             iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.white))
+
+            toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, R.color.white))
         } else {
 
             iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.black))
+
+            toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, R.color.black))
         }
     }
 
@@ -130,6 +133,7 @@ class ConversorActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             finish() // Finaliza a atividade atual, retornando ao Hub.
         }
+
 
         val digitClickListener = View.OnClickListener { view ->
             // Chama a mesma função onDigitClick que já existe
