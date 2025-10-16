@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.example.hubkotlinapp.R
+import com.example.hubkotlinapp.common.Logger
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.TextInputEditText
 import java.text.NumberFormat
@@ -68,6 +69,14 @@ enum class ConversionType(val displayName: String, val units: Array<String>) {
 
 class ConversorActivity : AppCompatActivity() {
 
+    // TAG para o Logger
+    private val TAG = "ConversorActivity"
+
+    // Chave para salvar o estado
+    companion object {
+        private const val KEY_CURRENT_INPUT = "current_input"
+    }
+
     private lateinit var toolbar: MaterialToolbar
     private lateinit var spinnerTipoConversao: Spinner
     private lateinit var layoutConversorPadrao: LinearLayout
@@ -86,30 +95,54 @@ class ConversorActivity : AppCompatActivity() {
     private var currentInput = "0"
     private lateinit var selectedConversionType: ConversionType
     private var activeTipEditText: EditText? = null
+    private var isRecreating = false // Flag para controlar a recriação
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversor)
 
+        Logger.i(TAG, "onCreate chamado. O Bundle savedInstanceState é ${if (savedInstanceState == null) "NULO" else "VÁLIDO"}.")
+
         bindViews()
         setupListeners()
         setupMainSpinner()
+
+        if (savedInstanceState != null) {
+            isRecreating = true // ATIVA a flag durante a recriação
+            currentInput = savedInstanceState.getString(KEY_CURRENT_INPUT, "0")
+            Logger.d(TAG, "Estado restaurado: a variável 'currentInput' agora é '$currentInput'")
+        } else {
+            // Se for a primeira inicialização, define um valor padrão para o spinner.
+            spinnerTipoConversao.setSelection(0)
+        }
+
         val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
             iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.white))
-
             toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, R.color.white))
         } else {
-
             iconSwap.setColorFilter(ContextCompat.getColor(this, R.color.black))
-
             toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, R.color.black))
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Apenas desativamos a flag aqui, após a recriação ter sido concluída.
+        if (isRecreating) {
+            isRecreating = false
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Logger.i(TAG, "onSaveInstanceState chamado para salvar o estado.")
+        outState.putString(KEY_CURRENT_INPUT, currentInput)
+        Logger.d(TAG, "Estado salvo: a variável 'currentInput' ('$currentInput') foi guardada no Bundle.")
+    }
+
     private fun bindViews() {
-        // FindViews
         toolbar = findViewById(R.id.toolbar)
         spinnerTipoConversao = findViewById(R.id.spinnerTipoConversao)
         layoutConversorPadrao = findViewById(R.id.layoutConversorPadrao)
@@ -126,45 +159,30 @@ class ConversorActivity : AppCompatActivity() {
         iconSwap = findViewById(R.id.iconSwap)
     }
 
-
     private fun setupListeners() {
-        // Listener da Toolbar para a ação de VOLTAR
         toolbar.setNavigationOnClickListener {
-            finish() // Finaliza a atividade atual, retornando ao Hub.
+            finish()
         }
-
 
         val digitClickListener = View.OnClickListener { view ->
             if (view is Button) {
                 onDigitClick(view)
             }
         }
-        findViewById<Button>(R.id.btn0).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn1).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn2).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn3).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn4).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn5).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn6).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn7).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn8).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btn9).setOnClickListener(digitClickListener)
-        findViewById<Button>(R.id.btnDot).setOnClickListener(digitClickListener)
+        val ids = arrayOf(R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9, R.id.btnDot)
+        ids.forEach { findViewById<Button>(it).setOnClickListener(digitClickListener) }
 
-        // Teclado
         findViewById<Button>(R.id.btnClear).setOnClickListener { onClearClick() }
         findViewById<Button>(R.id.btnBackspace).setOnClickListener { onBackspaceClick() }
         findViewById<Button>(R.id.btnSwap).setOnClickListener { onSwapClick() }
         findViewById<ImageView>(R.id.iconSwap).setOnClickListener { onSwapClick() }
 
-        // Listener para o botão "="
         findViewById<Button>(R.id.btnEquals).setOnClickListener {
             if (selectedConversionType == ConversionType.TIP) {
                 calculateTip()
             }
         }
 
-        // Listener para os spinners de unidade
         val unitSpinnerListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 convert()
@@ -174,7 +192,6 @@ class ConversorActivity : AppCompatActivity() {
         spinnerUnidadeDe.onItemSelectedListener = unitSpinnerListener
         spinnerUnidadePara.onItemSelectedListener = unitSpinnerListener
 
-        // Listeners para os campos de texto da gorjeta
         val tipFieldClickListener = View.OnClickListener { view ->
             setActiveTipField(view as EditText)
         }
@@ -183,16 +200,11 @@ class ConversorActivity : AppCompatActivity() {
         editNumeroPessoas.setOnClickListener(tipFieldClickListener)
     }
 
-
     private fun setActiveTipField(field: EditText?) {
-        // Remove o destaque de todos
         editSubtotal.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
         editPorcentagemGorjeta.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
         editNumeroPessoas.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
-
         activeTipEditText = field
-
-        // Adiciona destaque com a cor primária do tema
         activeTipEditText?.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_200))
     }
 
@@ -212,15 +224,19 @@ class ConversorActivity : AppCompatActivity() {
     }
 
     private fun updateUIForConversionType() {
+        // *** ANÁLISE DO MAU FUNCIONAMENTO ***
+        // Se a tela está sendo recriada, registramos o erro de ciclo de vida.
+        if (isRecreating) {
+            Logger.e(TAG, "ANÁLISE DE MAL FUNCIONAMENTO (CICLO DE VIDA): O valor 'currentInput' ($currentInput) foi restaurado, mas a UI está sendo recriada. A chamada a 'onClearClick()' a seguir irá apagar este valor, e a recriação dos adaptadores dos Spinners de unidade perderá o estado de seleção, demonstrando o bug de perda de estado.")
+        }
+
         onClearClick()
 
         val isTipCalculator = (selectedConversionType == ConversionType.TIP)
 
-
         findViewById<Button>(R.id.btnEquals).visibility = if (isTipCalculator) View.VISIBLE else View.INVISIBLE
         findViewById<Button>(R.id.btnSwap).visibility = if (isTipCalculator) View.INVISIBLE else View.VISIBLE
         iconSwap.visibility = if (isTipCalculator) View.GONE else View.VISIBLE
-
 
         layoutTecladoNumerico.visibility = View.VISIBLE
         layoutConversorGorjeta.visibility = if (isTipCalculator) View.VISIBLE else View.GONE
@@ -237,7 +253,6 @@ class ConversorActivity : AppCompatActivity() {
         }
     }
 
-    // --- LÓGICA DO TECLADO ---
     fun onDigitClick(view: View) {
         if (view !is Button) return
         val digit = view.text.toString()
@@ -268,6 +283,8 @@ class ConversorActivity : AppCompatActivity() {
     }
 
     private fun onClearClick() {
+        if (!::selectedConversionType.isInitialized) return
+        
         if (selectedConversionType == ConversionType.TIP) {
             editSubtotal.setText("")
             editPorcentagemGorjeta.setText("")
@@ -312,16 +329,13 @@ class ConversorActivity : AppCompatActivity() {
         convert()
     }
 
-    // --- LÓGICA DE CÁLCULO ---
     private fun convert() {
-        if (selectedConversionType == ConversionType.TIP) return
+        if (!::selectedConversionType.isInitialized || selectedConversionType == ConversionType.TIP) return
         if (spinnerUnidadeDe.selectedItem == null || spinnerUnidadePara.selectedItem == null) return
 
         val inputValue = currentInput.toDoubleOrNull() ?: 0.0
-
         val fromUnit = spinnerUnidadeDe.selectedItem.toString()
         val toUnit = spinnerUnidadePara.selectedItem.toString()
-
 
         val valueInBaseUnit = when (fromUnit) {
             "Metro (m)" -> inputValue
@@ -332,8 +346,6 @@ class ConversorActivity : AppCompatActivity() {
             "Pé (ft)" -> inputValue * 0.3048
             "Jarda (yd)" -> inputValue * 0.9144
             "Milha (mi)" -> inputValue * 1609.34
-
-            // --- ÁREA (base: Metro²) ---
             "Metro² (m²)" -> inputValue
             "Centímetro² (cm²)" -> inputValue / 10000.0
             "Polegada² (in²)" -> inputValue * 0.00064516
@@ -341,20 +353,16 @@ class ConversorActivity : AppCompatActivity() {
             "Are (a)" -> inputValue * 100.0
             "Acre (ac)" -> inputValue * 4046.86
             "Hectare (ha)" -> inputValue * 10000.0
-
             "Byte" -> inputValue
             "Bit" -> inputValue / 8.0
             "Kilobyte (KB)" -> inputValue * 1024.0
             "Megabyte (MB)" -> inputValue * 1024.0 * 1024.0
             "Gigabyte (GB)" -> inputValue * 1024.0 * 1024.0 * 1024.0
             "Terabyte (TB)" -> inputValue * 1024.0 * 1024.0 * 1024.0 * 1024.0
-
             else -> inputValue
         }
 
-        // Converte da unidade base para a unidade de saída
         val outputValue = when (toUnit) {
-            // --- COMPRIMENTO (base: Metro) ---
             "Metro (m)" -> valueInBaseUnit
             "Milímetro (mm)" -> valueInBaseUnit * 1000.0
             "Centímetro (cm)" -> valueInBaseUnit * 100.0
@@ -363,8 +371,6 @@ class ConversorActivity : AppCompatActivity() {
             "Pé (ft)" -> valueInBaseUnit / 0.3048
             "Jarda (yd)" -> valueInBaseUnit / 0.9144
             "Milha (mi)" -> valueInBaseUnit / 1609.34
-
-            // --- ÁREA (base: Metro²) ---
             "Metro² (m²)" -> valueInBaseUnit
             "Centímetro² (cm²)" -> valueInBaseUnit * 10000.0
             "Polegada² (in²)" -> valueInBaseUnit / 0.00064516
@@ -372,24 +378,19 @@ class ConversorActivity : AppCompatActivity() {
             "Are (a)" -> valueInBaseUnit / 100.0
             "Acre (ac)" -> valueInBaseUnit / 4046.86
             "Hectare (ha)" -> valueInBaseUnit / 10000.0
-
-            // --- DADOS (base: Byte) ---
             "Byte" -> valueInBaseUnit
             "Bit" -> valueInBaseUnit * 8.0
             "Kilobyte (KB)" -> valueInBaseUnit / 1024.0
             "Megabyte (MB)" -> valueInBaseUnit / (1024.0 * 1024.0)
             "Gigabyte (GB)" -> valueInBaseUnit / (1024.0 * 1024.0 * 1024.0)
             "Terabyte (TB)" -> valueInBaseUnit / (1024.0 * 1024.0 * 1024.0 * 1024.0)
-
             else -> valueInBaseUnit
         }
 
         txtValorPara.text = formatResult(outputValue)
     }
 
-
     private fun formatResult(value: Double): String {
-        // Formata o número de saída para ter um número razoável de casas decimais
         val formattedResult = if (value < 0.0001 && value > 0) {
             String.format(Locale.US, "%.8f", value)
         } else {
@@ -400,7 +401,7 @@ class ConversorActivity : AppCompatActivity() {
 
     private fun calculateTip() {
         val subtotal = editSubtotal.text.toString().toDoubleOrNull() ?: 0.0
-        val percentage = editPorcentagemGorjeta.text.toString().toDoubleOrNull() ?: 15.0 // Padrão de 15%
+        val percentage = editPorcentagemGorjeta.text.toString().toDoubleOrNull() ?: 15.0
         val people = editNumeroPessoas.text.toString().toIntOrNull() ?: 1
 
         if (people < 1) {

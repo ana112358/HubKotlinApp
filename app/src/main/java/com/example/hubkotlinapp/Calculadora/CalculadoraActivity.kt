@@ -15,7 +15,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.hubkotlinapp.R // Import correto do R do Hub
+import com.example.hubkotlinapp.R
+import com.example.hubkotlinapp.common.Logger
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import kotlin.math.*
@@ -26,6 +27,9 @@ data class HistoricoItem(
 )
 
 class CalculadoraActivity : AppCompatActivity() {
+
+    // Adicionado para o Logger
+    private val TAG = "CalculadoraActivity"
 
     private lateinit var tvDisplay: TextView
     private val historicoLista = mutableListOf<HistoricoItem>()
@@ -39,6 +43,7 @@ class CalculadoraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculadora)
 
+        Logger.i(TAG, "Activity da Calculadora iniciada.")
 
         val btnToggle = findViewById<ImageButton>(R.id.btnToggleTheme)
         updateToggleIcon(btnToggle)
@@ -58,17 +63,14 @@ class CalculadoraActivity : AppCompatActivity() {
 
         val nightModeFlags = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-            // 2. Se for modo escuro, pinta a seta de branco
             toolbar.navigationIcon?.setTint(getColor(R.color.white))
         } else {
-            // 3. Se for modo claro, pinta a seta de preto
             toolbar.navigationIcon?.setTint(getColor(R.color.black))
         }
 
         toolbar.setNavigationOnClickListener {
             finish()
         }
-        // --- O restante do seu código onCreate permanece o mesmo ---
         tvDisplay = findViewById(R.id.txtResultado)
 
         val digits = listOf(
@@ -148,15 +150,12 @@ class CalculadoraActivity : AppCompatActivity() {
         updateDisplay()
     }
 
-    // ### INÍCIO DA CORREÇÃO ###
-    // O tipo do parâmetro 'item' foi corrigido para usar a classe HistoricoItem local.
     private fun adicionarHistoricoNaTelaParcial(item: HistoricoItem) {
         val historicoConteudo = findViewById<LinearLayout>(R.id.historicoConteudo)
         if (historicoConteudo == null) return
 
         val tvOperacao = TextView(this).apply {
             text = item.operacao
-            // Use o contexto para obter a cor de forma segura
             setTextColor(context.getColor(R.color.typed_text))
             textSize = 18f
             gravity = View.TEXT_ALIGNMENT_TEXT_END
@@ -167,7 +166,6 @@ class CalculadoraActivity : AppCompatActivity() {
         historicoConteudo.addView(tvOperacao)
     }
 
-    // O tipo do parâmetro 'item' foi corrigido para usar a classe HistoricoItem local.
     private fun adicionarHistoricoNaTela(item: HistoricoItem) {
         val historicoConteudo = findViewById<LinearLayout>(R.id.historicoConteudo)
         if (historicoConteudo == null) return
@@ -217,26 +215,25 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun appendDigit(d: String) {
+        Logger.d(TAG, "Dígito pressionado: $d")
         if (d == "." && currentInput.contains(".")) return
         currentInput = if (currentInput == "0" && d != ".") d else currentInput + d
         updateDisplay()
     }
 
     private fun onOperator(op: String) {
+        Logger.d(TAG, "Operador pressionado: $op")
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
                 if (operand == null) operand = value
                 else operand = performOperation(operand!!, value, pendingOp)
 
-                // Operação parcial no histórico
                 val operacaoStr = "${formatResult(operand!!)} $op"
                 val resultadoStr = ""
-                // No modo retrato, atualiza a UI do histórico
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                     val item = HistoricoItem(operacaoStr, resultadoStr)
                     historicoLista.add(item)
-
                 }
             }
             currentInput = ""
@@ -246,27 +243,34 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun onEquals() {
+        Logger.d(TAG, "Botão de igual pressionado. Operando: $operand, Input: $currentInput, Operação pendente: $pendingOp")
         if (operand != null && currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull() ?: return
             val result = performOperation(operand!!, value, pendingOp)
 
-            val operacaoStr = "${formatResult(operand!!)} ${pendingOp ?: ""} ${formatResult(value)}"
-            val resultadoStr = "= ${formatResult(result)}"
+            if (formatResult(result) != "Erro") { // Só registra no histórico se não for erro
+                val operacaoStr = "${formatResult(operand!!)} ${pendingOp ?: ""} ${formatResult(value)}"
+                val resultadoStr = "= ${formatResult(result)}"
 
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                val item = HistoricoItem(operacaoStr, resultadoStr)
-                historicoLista.add(item)
-                adicionarHistoricoNaTela(item)
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    val item = HistoricoItem(operacaoStr, resultadoStr)
+                    historicoLista.add(item)
+                    adicionarHistoricoNaTela(item)
+                }
+
+                currentInput = formatResult(result)
             }
-
+            
             operand = null
             pendingOp = null
-            currentInput = formatResult(result)
             updateDisplay()
+        } else {
+            Logger.w(TAG, "Botão de igual pressionado, mas sem operação válida para executar.")
         }
     }
 
     private fun onPercentage() {
+        Logger.d(TAG, "Porcentagem pressionada.")
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
@@ -282,14 +286,22 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun performOperation(a: Double, b: Double, op: String?): Double {
+        Logger.d(TAG, "Executando operação: $a $op $b")
         return when (op) {
             "+" -> a + b
             "-" -> a - b
             "×" -> a * b
-            "÷" -> if (b == 0.0) {
-                Toast.makeText(this, "Divisão por zero", Toast.LENGTH_SHORT).show()
-                a
-            } else a / b
+            "÷" -> {
+                if (b == 0.0) {
+                    Logger.e(TAG, "ERRO CRÍTICO: Tentativa de divisão por zero! Operandos: a=$a, b=$b")
+                    currentInput = "" // Limpa o input atual
+                    tvDisplay.text = "Erro" // Mostra erro no display
+                    Toast.makeText(this, "Divisão por zero não é permitida.", Toast.LENGTH_SHORT).show()
+                    a // Retorna 'a' para não quebrar o resto do fluxo, mas o display já mostra erro
+                } else {
+                    a / b
+                }
+            }
             "^" -> a.pow(b)
             else -> b
         }
@@ -395,12 +407,10 @@ class CalculadoraActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnRad)?.text = mode
     }
 
-
     private fun formatResult(result: Double): String {
         return when {
             result.isInfinite() -> "∞"
             result.isNaN() -> "Erro"
-            // Use uma comparação mais robusta para zero
             abs(result) < 1e-9 -> "0"
             result == result.toLong().toDouble() -> result.toLong().toString()
             else -> {
@@ -414,6 +424,7 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun clearAll() {
+        Logger.i(TAG, "Limpando display e operações.")
         currentInput = ""
         operand = null
         pendingOp = null
@@ -421,6 +432,7 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun backspace() {
+        Logger.d(TAG, "Backspace pressionado.")
         if (currentInput.isNotEmpty()) {
             currentInput = currentInput.dropLast(1)
             if (currentInput.isEmpty()) {
@@ -434,7 +446,6 @@ class CalculadoraActivity : AppCompatActivity() {
         }
         updateDisplay()
     }
-
 
     private fun updateDisplay() {
         val displayText = if (currentInput.isNotEmpty()) {

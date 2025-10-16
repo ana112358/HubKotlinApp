@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "HubKotlinApp"
 include(":app")
- 
+include(":common")
