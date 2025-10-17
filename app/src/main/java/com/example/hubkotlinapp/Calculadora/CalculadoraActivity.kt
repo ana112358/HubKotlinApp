@@ -110,6 +110,7 @@ class CalculadoraActivity : AppCompatActivity() {
                 }
 
                 btnLimparHistoricoRetrato.setOnClickListener {
+                    Logger.w(TAG, "Limpando o histórico de operações a pedido do usuário.")
                     historicoLista.clear()
                     val historicoConteudo = findViewById<LinearLayout>(R.id.historicoConteudo)
                     historicoConteudo?.removeAllViews()
@@ -154,6 +155,8 @@ class CalculadoraActivity : AppCompatActivity() {
         val historicoConteudo = findViewById<LinearLayout>(R.id.historicoConteudo)
         if (historicoConteudo == null) return
 
+        Logger.d(TAG, "Adicionando item parcial ao histórico da UI: '${item.operacao}'")
+
         val tvOperacao = TextView(this).apply {
             text = item.operacao
             setTextColor(context.getColor(R.color.typed_text))
@@ -169,6 +172,8 @@ class CalculadoraActivity : AppCompatActivity() {
     private fun adicionarHistoricoNaTela(item: HistoricoItem) {
         val historicoConteudo = findViewById<LinearLayout>(R.id.historicoConteudo)
         if (historicoConteudo == null) return
+
+        Logger.d(TAG, "Adicionando item completo ao histórico da UI: '${item.operacao}' -> '${item.resultado}'")
 
         val tvOperacao = TextView(this).apply {
             text = item.operacao
@@ -293,10 +298,10 @@ class CalculadoraActivity : AppCompatActivity() {
             "×" -> a * b
             "÷" -> {
                 if (b == 0.0) {
-                    Logger.e(TAG, "ERRO CRÍTICO: Tentativa de divisão por zero! Operandos: a=$a, b=$b")
+                    Logger.e(TAG, "ERRO de operação: Tentativa de divisão por zero! Operandos: a=$a, b=$b")
                     currentInput = "" // Limpa o input atual
                     tvDisplay.text = "Erro" // Mostra erro no display
-                    Toast.makeText(this, "Divisão por zero não é permitida.", Toast.LENGTH_SHORT).show()
+                    showError("Divisão por zero não é permitida.")
                     a // Retorna 'a' para não quebrar o resto do fluxo, mas o display já mostra erro
                 } else {
                     a / b
@@ -311,6 +316,7 @@ class CalculadoraActivity : AppCompatActivity() {
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
+                Logger.i(TAG, "Iniciando função trigonométrica: '$func' com valor '$value'")
                 try {
                     val angleInRadians = if (isRadianMode) value else Math.toRadians(value)
                     val result = when (func) {
@@ -326,9 +332,11 @@ class CalculadoraActivity : AppCompatActivity() {
                         }
                         else -> value
                     }
+                    Logger.i(TAG, "Função '$func' executada com sucesso. Resultado: $result")
                     currentInput = formatResult(result)
                     updateDisplay()
                 } catch (e: Exception) {
+                    Logger.e(TAG, "Falha ao executar função trigonométrica '$func'. Erro: ${e.message}")
                     showError("Erro matemático")
                 }
             }
@@ -339,6 +347,7 @@ class CalculadoraActivity : AppCompatActivity() {
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
+                Logger.i(TAG, "Iniciando função de log: '$func' com valor '$value'")
                 if (value <= 0) {
                     showError("Log de número ≤ 0")
                     return
@@ -349,9 +358,11 @@ class CalculadoraActivity : AppCompatActivity() {
                         "ln" -> ln(value)
                         else -> value
                     }
+                    Logger.i(TAG, "Função '$func' executada com sucesso. Resultado: $result")
                     currentInput = formatResult(result)
                     updateDisplay()
                 } catch (e: Exception) {
+                    Logger.e(TAG, "Falha ao executar função de log '$func'. Erro: ${e.message}")
                     showError("Erro matemático")
                 }
             }
@@ -362,14 +373,17 @@ class CalculadoraActivity : AppCompatActivity() {
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
+                Logger.i(TAG, "Iniciando função de potência: '$func' com valor '$value'")
                 try {
                     val result = when (func) {
                         "x²" -> value.pow(2.0)
                         else -> value
                     }
+                    Logger.i(TAG, "Função '$func' executada com sucesso. Resultado: $result")
                     currentInput = formatResult(result)
                     updateDisplay()
                 } catch (e: Exception) {
+                    Logger.e(TAG, "Falha ao executar função de potência '$func'. Erro: ${e.message}")
                     showError("Erro matemático")
                 }
             }
@@ -380,6 +394,7 @@ class CalculadoraActivity : AppCompatActivity() {
         if (currentInput.isNotEmpty()) {
             val value = currentInput.toDoubleOrNull()
             if (value != null) {
+                Logger.i(TAG, "Iniciando operação unária: '$operation' com valor '$value'")
                 try {
                     val result = when (operation) {
                         "sqrt" -> {
@@ -391,9 +406,11 @@ class CalculadoraActivity : AppCompatActivity() {
                         }
                         else -> value
                     }
+                    Logger.i(TAG, "Operação '$operation' executada com sucesso. Resultado: $result")
                     currentInput = formatResult(result)
                     updateDisplay()
                 } catch (e: Exception) {
+                    Logger.e(TAG, "Falha ao executar operação unária '$operation'. Erro: ${e.message}")
                     showError("Erro matemático")
                 }
             }
@@ -403,6 +420,7 @@ class CalculadoraActivity : AppCompatActivity() {
     private fun toggleAngleMode() {
         isRadianMode = !isRadianMode
         val mode = if (isRadianMode) "RAD" else "DEG"
+        Logger.i(TAG, "Modo de ângulo alterado para: $mode")
         Toast.makeText(this, "Modo: $mode", Toast.LENGTH_SHORT).show()
         findViewById<Button>(R.id.btnRad)?.text = mode
     }
@@ -420,6 +438,7 @@ class CalculadoraActivity : AppCompatActivity() {
     }
 
     private fun showError(message: String) {
+        Logger.e(TAG, "Exibindo erro para o usuário: $message")
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -462,6 +481,7 @@ class CalculadoraActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        Logger.i(TAG, "Salvando estado da calculadora: currentInput -> '$currentInput', operand -> $operand, pendingOp -> $pendingOp, isRadianMode -> $isRadianMode")
         outState.putString("currentInput", currentInput)
         outState.putDouble("operand", operand ?: Double.NaN)
         outState.putString("pendingOp", pendingOp)
@@ -475,6 +495,7 @@ class CalculadoraActivity : AppCompatActivity() {
         operand = if (opnd.isNaN()) null else opnd
         pendingOp = savedInstanceState.getString("pendingOp")
         isRadianMode = savedInstanceState.getBoolean("isRadianMode", true)
+        Logger.i(TAG, "Restaurando estado da calculadora: currentInput <- '$currentInput', operand <- $operand, pendingOp <- $pendingOp, isRadianMode <- $isRadianMode")
         updateDisplay()
     }
 }

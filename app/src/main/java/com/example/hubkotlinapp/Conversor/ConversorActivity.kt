@@ -101,7 +101,7 @@ class ConversorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversor)
 
-        Logger.i(TAG, "onCreate chamado. O Bundle savedInstanceState é ${if (savedInstanceState == null) "NULO" else "VÁLIDO"}.")
+        Logger.i(TAG, "Activity do Conversor iniciado. O Bundle savedInstanceState é ${if (savedInstanceState == null) "NULO" else "VÁLIDO"}.")
 
         bindViews()
         setupListeners()
