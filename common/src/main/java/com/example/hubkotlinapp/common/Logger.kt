@@ -9,7 +9,6 @@ object Logger {
     private const val HUB_TAG = "MeuAppHub"
 
     // Controla se os logs detalhados devem ser exibidos.
-    // Usaremos o BuildConfig do módulo para decidir.
     private val isDebugMode: Boolean = BuildConfig.DEBUG
 
     fun v(tag: String, message: String) {

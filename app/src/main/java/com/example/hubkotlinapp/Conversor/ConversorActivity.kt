@@ -101,16 +101,16 @@ class ConversorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversor)
 
-        Logger.i(TAG, "Activity do Conversor iniciado. O Bundle savedInstanceState é ${if (savedInstanceState == null) "NULO" else "VÁLIDO"}.")
+        Logger.i(TAG, "Activity do Conversor iniciada.")
 
         bindViews()
         setupListeners()
         setupMainSpinner()
 
         if (savedInstanceState != null) {
-            isRecreating = true // ATIVA a flag durante a recriação
+            isRecreating = true
             currentInput = savedInstanceState.getString(KEY_CURRENT_INPUT, "0")
-            Logger.d(TAG, "Estado restaurado: a variável 'currentInput' agora é '$currentInput'")
+            Logger.i(TAG, "Restaurando estado: currentInput <- '$currentInput'")
         } else {
             // Se for a primeira inicialização, define um valor padrão para o spinner.
             spinnerTipoConversao.setSelection(0)
@@ -129,6 +129,7 @@ class ConversorActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        Logger.d(TAG, "onResume chamado. isRecreating: $isRecreating")
         // Apenas desativamos a flag aqui, após a recriação ter sido concluída.
         if (isRecreating) {
             isRecreating = false
@@ -137,9 +138,8 @@ class ConversorActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        Logger.i(TAG, "onSaveInstanceState chamado para salvar o estado.")
+        Logger.i(TAG, "Salvando estado: currentInput -> '$currentInput'")
         outState.putString(KEY_CURRENT_INPUT, currentInput)
-        Logger.d(TAG, "Estado salvo: a variável 'currentInput' ('$currentInput') foi guardada no Bundle.")
     }
 
     private fun bindViews() {
@@ -185,6 +185,7 @@ class ConversorActivity : AppCompatActivity() {
 
         val unitSpinnerListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Logger.d(TAG, "Seleção de unidade alterada. Disparando conversão.")
                 convert()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -217,6 +218,7 @@ class ConversorActivity : AppCompatActivity() {
         spinnerTipoConversao.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedConversionType = ConversionType.values()[position]
+                Logger.i(TAG, "Tipo de conversão selecionado: ${selectedConversionType.displayName}")
                 updateUIForConversionType()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -224,6 +226,7 @@ class ConversorActivity : AppCompatActivity() {
     }
 
     private fun updateUIForConversionType() {
+        Logger.i(TAG, "Atualizando UI para o tipo de conversão: ${selectedConversionType.displayName}")
         // *** ANÁLISE DO MAU FUNCIONAMENTO ***
         // Se a tela está sendo recriada, registramos o erro de ciclo de vida.
         if (isRecreating) {
@@ -256,6 +259,7 @@ class ConversorActivity : AppCompatActivity() {
     fun onDigitClick(view: View) {
         if (view !is Button) return
         val digit = view.text.toString()
+        Logger.d(TAG, "Dígito pressionado: $digit")
         val isTipCalculator = (selectedConversionType == ConversionType.TIP)
 
         if (isTipCalculator) {
@@ -283,8 +287,9 @@ class ConversorActivity : AppCompatActivity() {
     }
 
     private fun onClearClick() {
+        Logger.w(TAG, "Ação de limpar tela executada.")
         if (!::selectedConversionType.isInitialized) return
-        
+       //loguer que aparece quando eu verifico se a  tela virou e ainda tenho dados, quero que nesse caso apareca um logger de erro
         if (selectedConversionType == ConversionType.TIP) {
             editSubtotal.setText("")
             editPorcentagemGorjeta.setText("")
@@ -298,6 +303,7 @@ class ConversorActivity : AppCompatActivity() {
     }
 
     private fun onBackspaceClick() {
+        Logger.d(TAG, "Backspace pressionado.")
         val isTipCalculator = (selectedConversionType == ConversionType.TIP)
         if (isTipCalculator) {
             activeTipEditText?.let { editText ->
@@ -318,6 +324,7 @@ class ConversorActivity : AppCompatActivity() {
 
     private fun onSwapClick() {
         if (selectedConversionType == ConversionType.TIP) return
+        Logger.i(TAG, "Invertendo unidades de conversão.")
         val fromIndex = spinnerUnidadeDe.selectedItemPosition
         val toIndex = spinnerUnidadePara.selectedItemPosition
         spinnerUnidadeDe.setSelection(toIndex)
@@ -336,6 +343,8 @@ class ConversorActivity : AppCompatActivity() {
         val inputValue = currentInput.toDoubleOrNull() ?: 0.0
         val fromUnit = spinnerUnidadeDe.selectedItem.toString()
         val toUnit = spinnerUnidadePara.selectedItem.toString()
+        
+        Logger.i(TAG, "Iniciando conversão: $inputValue $fromUnit -> $toUnit")
 
         val valueInBaseUnit = when (fromUnit) {
             "Metro (m)" -> inputValue
@@ -387,6 +396,7 @@ class ConversorActivity : AppCompatActivity() {
             else -> valueInBaseUnit
         }
 
+        Logger.i(TAG, "Conversão finalizada. Resultado: $outputValue")
         txtValorPara.text = formatResult(outputValue)
     }
 
@@ -403,15 +413,20 @@ class ConversorActivity : AppCompatActivity() {
         val subtotal = editSubtotal.text.toString().toDoubleOrNull() ?: 0.0
         val percentage = editPorcentagemGorjeta.text.toString().toDoubleOrNull() ?: 15.0
         val people = editNumeroPessoas.text.toString().toIntOrNull() ?: 1
+        
+        Logger.i(TAG, "Iniciando cálculo de gorjeta: Subtotal=$subtotal, Porcentagem=$percentage, Pessoas=$people")
 
         if (people < 1) {
-            txtResultadoGorjeta.text = "Divisão por zero!"
+            Logger.e(TAG, "Erro de Operação: Tentativa de divisão por zero no cálculo de gorjeta (pessoas < 1).")
+            txtResultadoGorjeta.text = "Número de pessoas deve ser ao menos 1."
             return
         }
 
         val tipAmount = subtotal * (percentage / 100)
         val totalAmount = subtotal + tipAmount
         val amountPerPerson = totalAmount / people
+        
+        Logger.i(TAG, "Cálculo de gorjeta finalizado. Gorjeta: $tipAmount, Total: $totalAmount, Por Pessoa: $amountPerPerson")
 
         val currencyFormat = NumberFormat.getCurrencyInstance()
         txtResultadoGorjeta.text = """
